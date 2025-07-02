@@ -5,35 +5,20 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
-from orders.models import Ticket
 from orders.selectors import ticket_get
 from orders.services import order_create, ticket_status_update
-
+from orders.serializers import OrderInputSerializer, TicketStatusInputSerializer
 
 class OrderCreateApi(APIView):
     """
     API for creating a new order. Requires token authentication.
     """
-    class TicketInputSerializer(serializers.Serializer):
-        """
-        Serializer for ticket data within an order.
-        """
-        product_codes = serializers.ListField(child=serializers.CharField())
-
-    class InputSerializer(serializers.Serializer):
-        """
-        Main input serializer for creating an order.
-        """
-        customer_name = serializers.CharField()
-        customer_phone = serializers.CharField()
-        comment = serializers.CharField(allow_blank=True, required=False)
-        tickets = TicketInputSerializer(many=True, min_length=1)
 
     def post(self, request) -> Response:
         """
         Handles the POST request to create an order.
         """
-        serializer = self.InputSerializer(data=request.data)
+        serializer = OrderInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         validated_data = serializer.validated_data
@@ -56,17 +41,11 @@ class TicketStatusUpdateApi(APIView):
     """
     permission_classes = [AllowAny]
 
-    class InputSerializer(serializers.Serializer):
-        """
-        Input serializer for updating a ticket's status.
-        """
-        status = serializers.ChoiceField(choices=Ticket.TicketStatus.choices)
-
     def post(self, request, ticket_code: uuid.UUID) -> Response:
         """
         Handles POST request to update a ticket's status.
         """
-        serializer = self.InputSerializer(data=request.data)
+        serializer = TicketStatusInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         ticket = ticket_get(code=ticket_code)
