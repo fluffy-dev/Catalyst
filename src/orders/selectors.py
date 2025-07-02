@@ -1,10 +1,8 @@
-from typing import TYPE_CHECKING
+from orders.models import Ticket
 import uuid
 
 from django.shortcuts import get_object_or_404
 
-if TYPE_CHECKING:
-    from src.orders.models import Ticket
 
 
 def ticket_get(*, code: uuid.UUID) -> "Ticket":
