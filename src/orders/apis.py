@@ -1,13 +1,13 @@
 import uuid
 
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
 from orders.selectors import ticket_get
 from orders.services import order_create, ticket_status_update
-from orders.serializers import OrderInputSerializer, TicketStatusInputSerializer
+from orders.serializers import OrderCreateInputSerializer, TicketStatusUpdateInputSerializer
 
 class OrderCreateApi(APIView):
     """
@@ -18,7 +18,7 @@ class OrderCreateApi(APIView):
         """
         Handles the POST request to create an order.
         """
-        serializer = OrderInputSerializer(data=request.data)
+        serializer = OrderCreateInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         validated_data = serializer.validated_data
@@ -45,7 +45,7 @@ class TicketStatusUpdateApi(APIView):
         """
         Handles POST request to update a ticket's status.
         """
-        serializer = TicketStatusInputSerializer(data=request.data)
+        serializer = TicketStatusUpdateInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         ticket = ticket_get(code=ticket_code)

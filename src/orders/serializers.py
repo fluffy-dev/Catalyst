@@ -8,7 +8,7 @@ class TicketInputSerializer(serializers.Serializer):
     product_codes = serializers.ListField(child=serializers.CharField())
 
 
-class OrderInputSerializer(serializers.Serializer):
+class OrderCreateInputSerializer(serializers.Serializer):
     """
     Main input serializer for creating an order.
     """
@@ -18,7 +18,7 @@ class OrderInputSerializer(serializers.Serializer):
     tickets = TicketInputSerializer(many=True, min_length=1)
 
 
-class TicketStatusInputSerializer(serializers.Serializer):
+class TicketStatusUpdateInputSerializer(serializers.Serializer):
     """
     Input serializer for updating a ticket's status.
     """
