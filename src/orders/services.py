@@ -2,8 +2,8 @@ from typing import Any, Dict, List
 
 from django.db import transaction
 
-from src.orders.models import Order, Ticket
-from src.users.models import User
+from orders.models import Order, Ticket
+from users.models import User
 
 
 @transaction.atomic

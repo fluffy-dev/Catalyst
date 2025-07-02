@@ -5,9 +5,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
-from src.orders.models import Ticket
-from src.orders.selectors import ticket_get
-from src.orders.services import order_create, ticket_status_update
+from orders.models import Ticket
+from orders.selectors import ticket_get
+from orders.services import order_create, ticket_status_update
 
 
 class OrderCreateApi(APIView):

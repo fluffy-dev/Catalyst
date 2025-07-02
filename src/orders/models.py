@@ -3,7 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 
-from src.core.models import BaseModel
+from core.models import BaseModel
 
 
 class Order(BaseModel):

@@ -1,5 +1,5 @@
 from django.urls import path
-from src.orders.apis import OrderCreateApi, TicketStatusUpdateApi
+from orders.apis import OrderCreateApi, TicketStatusUpdateApi
 
 urlpatterns = [
     path('create/', OrderCreateApi.as_view(), name='create'),
