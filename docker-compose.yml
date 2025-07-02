@@ -22,20 +22,25 @@ services:
     volumes:
       - ./src:/usr/src/app/src
     ports:
-      - "8080:8000"
+      - "8000:8000"
     env_file:
       - .env
+    environment:
+      - PYTHONPATH=/usr/src/app/src
     depends_on:
       db:
         condition: service_healthy
 
   celery_worker:
     build: .
+    entrypoint: /usr/src/app/entrypoint-celery.sh
     command: celery -A config worker -l info
     volumes:
       - ./src:/usr/src/app/src
     env_file:
       - .env
+    environment:
+      - PYTHONPATH=/usr/src/app/src
     depends_on:
       - redis
       - app
